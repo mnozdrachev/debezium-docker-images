@@ -10,3 +10,5 @@
 .settings/
 .gradle/
 .DS_Store
+
+*.sw[po]
