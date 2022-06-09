@@ -30,7 +30,7 @@ build_docker_image () {
     docker run --rm -i hadolint/hadolint:latest < "${IMAGE_PATH}"
 
     echo "****************************************************************"
-    echo "** Building    debezium/${IMAGE_NAME}:${IMAGE_TAG}"
+    echo "** Building    debezium/mmc-${IMAGE_NAME}:${IMAGE_TAG}"
     echo "****************************************************************"
     docker build -t "debezium/mmc-${IMAGE_NAME}:latest" "${IMAGE_PATH}"
 }
