@@ -30,9 +30,41 @@ build_docker_image () {
     docker run --rm -i hadolint/hadolint:latest < "${IMAGE_PATH}"
 
     echo "****************************************************************"
-    echo "** Building    debezium/mmc-${IMAGE_NAME}:${IMAGE_TAG}"
+    echo "** Building    debezium/${IMAGE_NAME}:${IMAGE_TAG}"
     echo "****************************************************************"
-    docker build -t "debezium/mmc-${IMAGE_NAME}:latest" "${IMAGE_PATH}"
+    docker build -t "debezium/${IMAGE_NAME}:latest" "${IMAGE_PATH}"
+
+    if [ -z "$RELEASE_TAG" ]; then
+        echo "****************************************************************"
+        echo "** Stream Tag  debezium/${IMAGE_NAME}:${IMAGE_TAG}       "
+        echo "****************************************************************"
+        docker tag "debezium/${IMAGE_NAME}:latest" "debezium/${IMAGE_NAME}:${IMAGE_TAG}"
+        if [ "$PUSH_IMAGES" == "true" ]; then
+            echo "Pushing the stream image into the registry"
+            docker push "debezium/${IMAGE_NAME}:${IMAGE_TAG}"
+            docker tag "debezium/${IMAGE_NAME}:${IMAGE_TAG}" "quay.io/debezium/${IMAGE_NAME}:${IMAGE_TAG}"
+            docker push "quay.io/debezium/${IMAGE_NAME}:${IMAGE_TAG}"
+            if [ "$DEBEZIUM_VERSION" == "$LATEST_STREAM" ]; then
+                echo "Pushing the latest image into the registry"
+                docker push "debezium/${IMAGE_NAME}:latest"
+                docker tag "debezium/${IMAGE_NAME}:latest" "quay.io/debezium/${IMAGE_NAME}:latest"
+                docker push "quay.io/debezium/${IMAGE_NAME}:latest"
+            fi
+        fi
+    fi
+
+    if [ -n "$RELEASE_TAG" ]; then
+        echo "****************************************************************"
+        echo "** Release Tag debezium/${IMAGE_NAME}:${RELEASE_TAG}       "
+        echo "****************************************************************"
+        docker tag "debezium/${IMAGE_NAME}:latest" "debezium/${IMAGE_NAME}:${RELEASE_TAG}"
+        if [ "$PUSH_IMAGES" == "true" ]; then
+            echo "Pushing the stream image into the registry"
+            docker tag "debezium/${IMAGE_NAME}:${RELEASE_TAG}" "quay.io/debezium/${IMAGE_NAME}:${RELEASE_TAG}"
+            docker push "quay.io/debezium/${IMAGE_NAME}:${RELEASE_TAG}"
+            docker push "debezium/${IMAGE_NAME}:${RELEASE_TAG}"
+        fi
+    fi
 }
 
 
