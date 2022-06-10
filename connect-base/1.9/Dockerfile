@@ -19,11 +19,12 @@ COPY docker-maven-download.sh /usr/local/bin/docker-maven-download
 #
     #CONFLUENT_VERSION=5.5.1 \
     #CONFLUENT_VERSION=7.0.1 \
+    #CONFLUENT_VERSION=5.1.2 \
 ENV KAFKA_CONNECT_PLUGINS_DIR=$KAFKA_HOME/connect \
     EXTERNAL_LIBS_DIR=$KAFKA_HOME/external_libs \
     CONNECT_PLUGIN_PATH=$KAFKA_CONNECT_PLUGINS_DIR \
     MAVEN_DEP_DESTINATION=$KAFKA_HOME/libs \
-    CONFLUENT_VERSION=5.1.2 \
+    CONFLUENT_VERSION=7.0.1 \
     AVRO_VERSION=1.10.1 \
     APICURIO_VERSION=2.1.5.Final \
     GUAVA_VERSION=31.0.1-jre
@@ -44,16 +45,16 @@ RUN mkdir "$KAFKA_CONNECT_PLUGINS_DIR" "$EXTERNAL_LIBS_DIR"
 # on the classpath, which results in arcane NoSuchMethodError exceptions.
 #
 # 7.0.1
-#RUN docker-maven-download confluent kafka-connect-avro-converter "$CONFLUENT_VERSION" fd03a1436f29d39e1807e2fb6f8e415a && \
-    #docker-maven-download confluent kafka-connect-avro-data "$CONFLUENT_VERSION" d27f30e9eca4ef1129289c626e9ce1f1 && \
-    #docker-maven-download confluent kafka-avro-serializer "$CONFLUENT_VERSION" c72420603422ef54d61f493ca338187c && \
-    #docker-maven-download confluent kafka-schema-serializer "$CONFLUENT_VERSION" 9c510db58119ef66d692ae172d5b1204 && \
-    #docker-maven-download confluent kafka-schema-registry-client "$CONFLUENT_VERSION" 7449df1f5c9a51c3e82e776eb7814bf1 && \
-    #docker-maven-download confluent common-config "$CONFLUENT_VERSION" aab5670de446af5b6f10710e2eb86894 && \
-    #docker-maven-download confluent common-utils "$CONFLUENT_VERSION" 74bf5cc6de2748148f5770bccd83a37c && \
-    #docker-maven-download central org/apache/avro avro "$AVRO_VERSION" 35469fee6d74ecbadce4773bfe3a204c && \
-    #docker-maven-download apicurio "$APICURIO_VERSION" bd7adf3f599968db4529fe4592d07bc8 && \
-    #docker-maven-download central com/google/guava guava "$GUAVA_VERSION" bb811ca86cba6506cca5d415cd5559a7
+RUN docker-maven-download confluent kafka-connect-avro-converter "$CONFLUENT_VERSION" fd03a1436f29d39e1807e2fb6f8e415a && \
+    docker-maven-download confluent kafka-connect-avro-data "$CONFLUENT_VERSION" d27f30e9eca4ef1129289c626e9ce1f1 && \
+    docker-maven-download confluent kafka-avro-serializer "$CONFLUENT_VERSION" c72420603422ef54d61f493ca338187c && \
+    docker-maven-download confluent kafka-schema-serializer "$CONFLUENT_VERSION" 9c510db58119ef66d692ae172d5b1204 && \
+    docker-maven-download confluent kafka-schema-registry-client "$CONFLUENT_VERSION" 7449df1f5c9a51c3e82e776eb7814bf1 && \
+    docker-maven-download confluent common-config "$CONFLUENT_VERSION" aab5670de446af5b6f10710e2eb86894 && \
+    docker-maven-download confluent common-utils "$CONFLUENT_VERSION" 74bf5cc6de2748148f5770bccd83a37c && \
+    docker-maven-download central org/apache/avro avro "$AVRO_VERSION" 35469fee6d74ecbadce4773bfe3a204c && \
+    docker-maven-download apicurio "$APICURIO_VERSION" bd7adf3f599968db4529fe4592d07bc8 && \
+    docker-maven-download central com/google/guava guava "$GUAVA_VERSION" bb811ca86cba6506cca5d415cd5559a7
 # 5.5.1
 #RUN docker-maven-download confluent kafka-connect-avro-converter "$CONFLUENT_VERSION" 9c1846872e6706166b7f2d7ae3922d3e && \
     #docker-maven-download confluent kafka-connect-avro-data "$CONFLUENT_VERSION" 08579b13feb7421de5a7774fd16223db && \
@@ -66,14 +67,14 @@ RUN mkdir "$KAFKA_CONNECT_PLUGINS_DIR" "$EXTERNAL_LIBS_DIR"
     #docker-maven-download apicurio "$APICURIO_VERSION" bd7adf3f599968db4529fe4592d07bc8 && \
     #docker-maven-download central com/google/guava guava "$GUAVA_VERSION" bb811ca86cba6506cca5d415cd5559a7
 # 5.1.2
-RUN docker-maven-download confluent kafka-connect-avro-converter "$CONFLUENT_VERSION" b6b8507bdc518d8c3d7d4a62b6140977 && \
-    docker-maven-download confluent kafka-avro-serializer "$CONFLUENT_VERSION" 464857f51204412996e2bb81d67a94e8 && \
-    docker-maven-download confluent kafka-schema-registry-client "$CONFLUENT_VERSION" e3078fa805dd793e9d97d2bf395d037a && \
-    docker-maven-download confluent common-config "$CONFLUENT_VERSION" 4ee0fb996cea8691196c4187876b388b && \
-    docker-maven-download confluent common-utils "$CONFLUENT_VERSION" 7aef21c3824f218252b8f2383c71840f && \
-    docker-maven-download central org/codehaus/jackson jackson-core-asl "$AVRO_JACKSON_VERSION" 319c49a4304e3fa9fe3cd8dcfc009d37 && \
-    docker-maven-download central org/codehaus/jackson jackson-mapper-asl "$AVRO_JACKSON_VERSION" 1750f9c339352fc4b728d61b57171613 && \
-    docker-maven-download central org/apache/avro avro "$AVRO_VERSION" 10395e5a571e1a1f6113411f276d2fea
+#RUN docker-maven-download confluent kafka-connect-avro-converter "$CONFLUENT_VERSION" b6b8507bdc518d8c3d7d4a62b6140977 && \
+    #docker-maven-download confluent kafka-avro-serializer "$CONFLUENT_VERSION" 464857f51204412996e2bb81d67a94e8 && \
+    #docker-maven-download confluent kafka-schema-registry-client "$CONFLUENT_VERSION" e3078fa805dd793e9d97d2bf395d037a && \
+    #docker-maven-download confluent common-config "$CONFLUENT_VERSION" 4ee0fb996cea8691196c4187876b388b && \
+    #docker-maven-download confluent common-utils "$CONFLUENT_VERSION" 7aef21c3824f218252b8f2383c71840f && \
+    #docker-maven-download central org/codehaus/jackson jackson-core-asl "$AVRO_JACKSON_VERSION" 319c49a4304e3fa9fe3cd8dcfc009d37 && \
+    #docker-maven-download central org/codehaus/jackson jackson-mapper-asl "$AVRO_JACKSON_VERSION" 1750f9c339352fc4b728d61b57171613 && \
+    #docker-maven-download central org/apache/avro avro "$AVRO_VERSION" 10395e5a571e1a1f6113411f276d2fea
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["start"]
